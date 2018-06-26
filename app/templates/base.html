@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      {% if title %}
+      <title>{{ title }} - Unser naechstes Abenteuer</title>
+      {% else %}
+      <title>Wilkommen in unserem naechsten Abenteuer</title>
+      {% endif %}
+    </head>
+    <body>
+        <div>Abenteueruebersicht: 
+        <a href="{{ url_for('index') }}">Startseite</a> 
+        {% if current_user.is_anonymous %}
+        <a href="{{ url_for('login') }}">Anmeldung</a>
+        {% else %}
+        <a href="{{ url_for('logout') }}">Abmeldung</a>
+        {% endif %}
+        <a href="{{ url_for('protected') }}">Gesichert</a>
+        <a href="{{ url_for('register') }}">Registrieren</a>
+        </div>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </body>
+</html>
